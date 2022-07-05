@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack A Mole</title>
+    <style>
+        .text-center {
+    text-align: center;
+}
+.text-size {
+    font-size: 24px;
+}
+.just-cent{
+    justify-content:center;
+}
+.just-space-b{
+    justify-content: space-between;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.flex-dir {
+    flex-direction: column;
+}
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.holes {
+    flex-basis: calc((100% / 3) - 12px);
+    height: 10;
+    border-radius: 30%;
+    background-color: yellow;
+    border: 2px, solid, black;
+    margin: 3px;
+    line-height: 20;
+}
+
+.moles2 {
+    background-color: rgb(109, 22, 22);
+}
+
+.startbutton {
+    width: 33%;
+    height: 30px;
+    background-color: blue;
+}
+
+.background-color {
+    background-color: rgb(119, 111, 111);
+}
+
+.background-color2 {
+    background-color: white;
+}
+
+.color-red{
+    color: #F00;
+}
+
+
+.scoreup {
+    color: rgb(6, 95, 6);
+}
+
+.scoredown {
+    color: rgb(207, 0, 0)
+}
+    </style>
+</head>
+<body class="display-flex flex-dir">
+<div
+    class="background-color">
+
+    
+    <div class="text-center">
+       <button class="startbutton" ID="startthegame">
+           Start
+       </button>
+   </div>
+   
+   <div class="just-cent text-center">
+      
+       <div>
+           <h1 id="Timer">
+               Time:
+           </h1>
+       </div>
+      
+       <div class="display-flex flex-wrap">
+          
+           <div class="holes">
+               1
+           </div>
+
+           <div class="holes">
+               2
+           </div>
+
+           <div class="holes">
+               3
+           </div>
+
+           <div class="holes">
+               4
+           </div>
+
+           <div class="holes">
+               5
+           </div>
+
+           <div class="holes">
+               6
+           </div>
+ 
+            -->
+
+       </div>
+       
+       <div>
+           <h1 id="Score">
+               Score: Waiting on player
+           </h1>
+       </div>
+   </div></div>
+   <script>
+    let time = 0
+    let score = 0
+    let gameactive = false
+    document.getElementById("startthegame").addEventListener('click', function () {
+    
+        gameactive = true
+        time = 30
+        document.getElementById("Timer").innerText = `Time: 30`
+        document.getElementById("Score").innerText = `Score: 0`
+        document.getElementById("startthegame").innertext = `Reset`
+    
+        let timeinterval = setInterval(() => {
+    
+            if (time > 0) {
+                time--
+                document.getElementById("Timer").innerText = `Whack A Mole Time: ${time}`
+            }
+            else {
+                gameactive = false
+                clearInterval(timeinterval)
+                document.getElementById("Timer").innerText = `No More Time For You!`
+    
+            }
+    
+            console.log(time)
+        }, 1000);
+        let moleInterval = setInterval(() => {
+            if (!gameactive) {
+                clearInterval(moleInterval)
+                return
+            }
+            let moles = document.querySelectorAll(".holes")
+    
+            let moleactive = Math.floor(Math.random() * moles.length)
+            moles[moleactive].classList.add("moles2")
+    
+            setTimeout(() => {
+                console.log(moleactive)
+                moles[moleactive].classList.remove("moles2")
+            }, 900)
+        }, 500);
+    
+        document.querySelectorAll(".holes").forEach((element) => {
+            element.addEventListener('click', function (e) {
+                if (!e.target.classList.contains("moles2")) {
+                    score--
+                    document.getElementById("Score").innerText = `Score: ${score}`
+                    return
+                }
+                else {
+                    score++
+                    document.getElementById("Score").innerText = `Score: ${score}`
+    
+                }
+    
+            })
+        })
+    
+    }) 
+
+
+   </script> 
+</body>
+</html>
